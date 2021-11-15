@@ -4,10 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start":  "node src/"
+    "start": "node src/"
   },
   "dependencies": {
+    "@prisma/client": "^3.4.2",
     "apollo-server": "^3.5.0",
     "graphql": "^16.0.1"
+  },
+  "devDependencies": {
+    "prisma": "3.4.2"
   }
 }
