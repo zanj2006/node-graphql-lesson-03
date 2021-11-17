@@ -10,5 +10,14 @@ services:
       - postgres:/var/lib/postgresql/data
     ports:
       - '5432:5432'
+  prisma:
+    image: cooper/prisma-apollo-server
+    depends_on:
+      - postgres
+    ports:
+      - '9090:9090'
+    links:
+      - "postgres:database"
+
 volumes:
   postgres:
