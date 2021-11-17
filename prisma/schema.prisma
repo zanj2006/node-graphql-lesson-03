@@ -1,16 +1,25 @@
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 model Student {
-  id       Int     @id @default(autoincrement())
-  email    String
-  fullName String
-  dept     String?
-  enrolled Boolean @default(false)
+    id       Int     @id @default(autoincrement())
+    email    String
+    fullName String
+    dept     String?
+    enrolled Boolean @default(false)
+    age      Int @default(0)
+    lessons  Lesson[]
+}
+
+model Lesson {
+    id       Int     @id @default(autoincrement())
+    name     String
+    studentId Int
+    student Student @relation(fields: [studentId], references: [id])
 }

@@ -7,9 +7,23 @@ const resolvers = {
         fullName: (parent) => parent.fullName,
         dept: (parent) => parent.dept,
         enrolled: (parent) => parent.enrolled,
-      },
+        age: (parent) => parent.age,
+        lessons: (parent) => parent.lessons
+    },
+
+    Lesson: {
+        id: parent => parent.id,
+        name: parent => parent.name,
+        student: parent => parent.student
+    },
 
     Query: {
+        students: (parent, args) => {
+            return prisma.student.findMany({include: {lessons: true}});
+        },
+        lessons: (parent, args) => {
+            return prisma.lesson.findMany({include: {student: true}});
+        },
         enrollment: (parent, args) => {
             return prisma.student.findMany({
                 where: { enrolled: true },
@@ -29,6 +43,14 @@ const resolvers = {
                     email: args.email,
                     fullName: args.fullName,
                     dept: args.dept,
+                },
+            });
+        },
+        createLesson: (parent, args) => {
+            return prisma.lesson.create({
+                data: {
+                    name: args.name,
+                    student: {connect: {id: Number(args.studentId)}}
                 },
             });
         },
